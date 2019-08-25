@@ -40,7 +40,7 @@ app.get('/api/courses', (req, res) => {
 app.post('/api/courses', (req, res) => {
    //To validate parameter based on JOI API
     const {error} = ValidateCourse(req.body);
-    if (error) return res.status(400).send(result.error.details[0].message);
+    if (error) return res.status(400).send(error.details[0].message);
 
     const course = {
         id: courses.length + 1,
@@ -69,7 +69,7 @@ app.put('/api/courses/:id', (req, res) => {
 
     //object distruption
     const {error} = ValidateCourse(req.body);
-    if (error) return res.status(400).send(result.error.details[0].message);
+    if (error) return res.status(400).send(error.details[0].message);
 
 
     //Update course
@@ -87,10 +87,6 @@ app.delete('/api/courses/:id', (req, res)=>{
     if (!course) return res.status(400).send('The course with the given ID was not found');
 
 
-     //object distruption
-     const {error} = ValidateCourse(req.body);
-     if (error) return res.status(400).send(result.error.details[0].message);
-
      //Delete
      const index = courses.indexOf(req.params.id);
      courses.splice(index, 1);
@@ -101,7 +97,7 @@ app.delete('/api/courses/:id', (req, res)=>{
 
 function ValidateCourse(course) {
     const schema = {
-        name: Joi.string().min(3).max(30).required()
+        name: Joi.string().min(3).max(100).required()
     };
     return Joi.validate(course, schema);
 

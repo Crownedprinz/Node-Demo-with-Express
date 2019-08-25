@@ -10,11 +10,11 @@
       }
     },
     "host": "localhost:3000",
-    "basePath": "/api/v1",
+    "basePath": "/api",
     "tags": [
       {
-        "name": "Users",
-        "description": "API for users in the system"
+        "name": "Courses",
+        "description": "API for Courses in the system"
       }
     ],
     "schemes": [
@@ -27,19 +27,19 @@
       "application/json"
     ],
     "paths": {
-      "/users": {
+      "/courses": {
         "post": {
           "tags": [
-            "Users"
+            "Courses"
           ],
-          "description": "Create new user in system",
+          "description": "Add a course to the system",
           "parameters": [
             {
-              "name": "user",
+              "name": "course",
               "in": "body",
-              "description": "User that we want to create",
+              "description": "Add a course",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Course"
               }
             }
           ],
@@ -48,86 +48,86 @@
           ],
           "responses": {
             "200": {
-              "description": "New user is created",
+              "description": "New course is created",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Course"
               }
             }
           }
         },
         "get": {
           "tags": [
-            "Users"
+            "Courses"
           ],
-          "summary": "Get all users in system",
+          "summary": "Get all courses in system",
           "responses": {
             "200": {
               "description": "OK",
               "schema": {
-                "$ref": "#/definitions/Users"
+                "$ref": "#/definitions/Courses"
               }
             }
           }
         }
       },
-      "/users/{userId}": {
+      "/courses/{id}": {
         "parameters": [
           {
-            "name": "userId",
+            "name": "id",
             "in": "path",
             "required": true,
-            "description": "ID of user that we want to find",
+            "description": "ID of course that we want to find",
             "type": "string"
           }
         ],
         "get": {
           "tags": [
-            "Users"
+            "Courses"
           ],
-          "summary": "Get user with given ID",
+          "summary": "Get course with given ID",
           "responses": {
             "200": {
-              "description": "User is found",
+              "description": "Course is found",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Course"
               }
             }
           }
         },
         "delete": {
-          "summary": "Delete user with given ID",
+          "summary": "Delete course with given ID",
           "tags": [
-            "Users"
+            "Courses"
           ],
           "responses": {
             "200": {
-              "description": "User is deleted",
+              "description": "Course is deleted",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/updateCourse"
               }
             }
           }
         },
         "put": {
-          "summary": "Update user with give ID",
+          "summary": "Update course with give ID",
           "tags": [
-            "Users"
+            "Courses"
           ],
           "parameters": [
             {
-              "name": "user",
+              "name": "course",
               "in": "body",
-              "description": "User with new values of properties",
+              "description": "course with new values of properties",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Course"
               }
             }
           ],
           "responses": {
             "200": {
-              "description": "User is updated",
+              "description": "Course is updated",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Course"
               }
             }
           }
@@ -135,31 +135,25 @@
       }
     },
     "definitions": {
-      "User": {
+      "Course": {
         "required": [
-          "email",
-          "_id"
+          "name"
         ],
         "properties": {
-          "_id": {
+             "name": {
             "type": "string",
             "uniqueItems": true
-          },
-          "email": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
           }
         }
       },
-      "Users": {
+      "updateCourse": {
+        "required": [
+          "_id"
+        ]
+    },
+      "Courses": {
         "type": "array",
-        "$ref": "#/definitions/User"
+        "$ref": "#/definitions/Course"
       }
     }
   }
